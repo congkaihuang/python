@@ -1,23 +1,12 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  annotations:
-    kubectl.kubernetes.io/last-applied-configuration: >
-      {"apiVersion":"apps/v1","kind":"StatefulSet","metadata":{"annotations":{},"generation":1,"labels":{"app":"zookeeper","chart":"zookeeper-0.4.2","heritage":"Tiller","release":"zk-test02"},"name":"zk-test02-zookeeper","namespace":"zookeeper"},"spec":{"podManagementPolicy":"OrderedReady","replicas":3,"revisionHistoryLimit":10,"selector":{"matchLabels":{"app":"zookeeper","release":"zk-test02"}},"serviceName":"zk-test02-zookeeper-headless","template":{"metadata":{"labels":{"app":"zookeeper","release":"zk-test02"}},"spec":{"affinity":{"podAntiAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":[{"labelSelector":{"matchLabels":{"app":"zookeeper","release":"zk-test02"}},"topologyKey":"kubernetes.io/hostname"}]}},"containers":[{"command":["sh","-c","zkGenConfig.sh
-      \u0026\u0026 exec zkServer.sh
-      start-foreground"],"env":[{"name":"ZK_REPLICAS","value":"3"},{"name":"ZK_HEAP_SIZE","value":"2G"},{"name":"ZK_TICK_TIME","value":"2000"},{"name":"ZK_INIT_LIMIT","value":"10"},{"name":"ZK_SYNC_LIMIT","value":"5"},{"name":"ZK_MAX_CLIENT_CNXNS","value":"60"},{"name":"ZK_SNAP_RETAIN_COUNT","value":"3"},{"name":"ZK_PURGE_INTERVAL","value":"1"},{"name":"ZK_LOG_LEVEL","value":"INFO"},{"name":"ZK_CLIENT_PORT","value":"2181"},{"name":"ZK_SERVER_PORT","value":"2888"},{"name":"ZK_ELECTION_PORT","value":"3888"}],"image":"registry.cn-hangzhou.aliyuncs.com/xianlu/k8szk:v2","imagePullPolicy":"Always","livenessProbe":{"exec":{"command":["zkOk.sh"]},"failureThreshold":3,"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"name":"zookeeper-server","ports":[{"containerPort":2181,"name":"client","protocol":"TCP"},{"containerPort":2888,"name":"server","protocol":"TCP"},{"containerPort":3888,"name":"leader-election","protocol":"TCP"}],"readinessProbe":{"exec":{"command":["zkOk.sh"]},"failureThreshold":3,"initialDelaySeconds":15,"periodSeconds":10,"successThreshold":1,"timeoutSeconds":5},"resources":{"limits":{"cpu":"4","memory":"8Gi"},"requests":{"cpu":"2","memory":"4Gi"}},"terminationMessagePath":"/dev/termination-log","terminationMessagePolicy":"File","volumeMounts":[{"mountPath":"/var/lib/zookeeper","name":"datadir","subPath":"data"}]}],"dnsPolicy":"ClusterFirst","restartPolicy":"Always","schedulerName":"default-scheduler","securityContext":{},"terminationGracePeriodSeconds":30}},"updateStrategy":{"type":"OnDelete"},"volumeClaimTemplates":[{"metadata":{"name":"datadir"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"500Gi"}},"storageClassName":"alicloud-disk-efficiency"}}]}}
-  creationTimestamp: '2020-11-12T12:32:00Z'
-  generation: 3
   labels:
     app: zookeeper
     chart: zookeeper-0.4.2
-    heritage: Tiller
     release: zk-test02
   name: zk-test02-zookeeper
   namespace: zookeeper
-  resourceVersion: '2750764951'
-  selfLink: /apis/apps/v1/namespaces/zookeeper/statefulsets/zk-test02-zookeeper
-  uid: 474e1f38-0d1f-4434-88d3-e9eb099686f8
 spec:
   podManagementPolicy: OrderedReady
   replicas: 3
@@ -29,8 +18,6 @@ spec:
   serviceName: zk-test02-zookeeper-headless
   template:
     metadata:
-      annotations:
-        kubectl.kubernetes.io/restartedAt: '2021-04-15T19:58:41+08:00'
       labels:
         app: zookeeper
         release: zk-test02
@@ -73,7 +60,7 @@ spec:
               value: '2888'
             - name: ZK_ELECTION_PORT
               value: '3888'
-          image: 'manniu-app-registry.cn-shanghai.cr.aliyuncs.com/public/zk:3.4.9'
+          image: 'zk:3.4.9'
           imagePullPolicy: Always
           livenessProbe:
             exec:
@@ -118,8 +105,6 @@ spec:
               name: datadir
               subPath: data
       dnsPolicy: ClusterFirst
-      imagePullSecrets:
-        - name: libei
       restartPolicy: Always
       schedulerName: default-scheduler
       securityContext: {}
@@ -137,13 +122,4 @@ spec:
             storage: 500Gi
         storageClassName: alicloud-disk-efficiency
         volumeMode: Filesystem
-      status:
-        phase: Pending
-status:
-  collisionCount: 0
-  currentRevision: zk-test02-zookeeper-64bc48bd65
-  observedGeneration: 3
-  readyReplicas: 3
-  replicas: 3
-  updateRevision: zk-test02-zookeeper-f9f99bbf
-  updatedReplicas: 3
+
