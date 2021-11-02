@@ -11,7 +11,7 @@ from xlutils.copy import copy as xl_copy
 item=sys.argv[1]
 timer = round(time.time() * 1000)
 
-cluster={'蛮牛':'ca81c0f112fc84e21bbc0024963402bf7','商城':'c8056aee7263b451bbeaee667d7b57288'}
+cluster={'mn':'afjalfjalkfjxxxx','sc':'ljaklfjakljglaflajgla'}
 depurl=f"https://cs.console.aliyun.com/apiProxy/mirana/region/{cluster[item]}/apis/apps/v1/deployments?__preventCache={timer}"
 usageurl=f"https://cs.console.aliyun.com/apiProxy/mirana/cn-shanghai/{cluster[item]}/apis/metrics.k8s.io/v1beta1/pods?__preventCache={timer}"
 hpaurl=f"https://cs.console.aliyun.com/apiProxy/mirana/region/{cluster[item]}/apis/autoscaling/v1/horizontalpodautoscalers?__preventCache={timer}"
