@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels: 
+    app: app-name
+  name: app-name
+  namespace: gpu-team
+spec:
+  progressDeadlineSeconds: 600
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: app-name
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: app-name
+    spec:
+      containers:
+        - image: '47.103.2.253:5000/gpu-team/app-name:tag'
+          imagePullPolicy: IfNotPresent
+          name: app-name
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /root
+              name: volumename
+      dnsPolicy: ClusterFirst
+      imagePullSecrets:
+        - name: gpu-team
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: 
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - hostPath:
+            path: /data/demo/output
+            type: Directory
+          name: volumename
+
+
